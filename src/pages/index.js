@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 import { Row, Col, Tabs, Input, Button, message } from 'antd'
 
-import ReactJson from 'react-json-view'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import Mapping from '../components/Mapping'
