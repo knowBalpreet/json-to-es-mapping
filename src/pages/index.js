@@ -52,7 +52,7 @@ const IndexPage = () => {
   console.log('data', data, isSubmitted)
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO title="JSON to ES mapping transformer" />
 
       {!isSubmitted && (
         <>
