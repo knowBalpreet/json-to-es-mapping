@@ -49,7 +49,7 @@ class Mapping extends Component {
         >
           Copy Mapping
         </Button>
-        <pre>
+        <pre style={{ padding: 5 }}>
           Click on type value to edit mapping <br />
         </pre>
         {editData.status && (

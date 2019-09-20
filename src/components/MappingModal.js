@@ -218,6 +218,16 @@ const MappingModal = ({ editData, setEditData, mappedData, setMappedData }) => {
       onCancel={() => setEditData({})}
       onOk={() => updateMapping({})}
     >
+      <pre style={{ padding: 5 }}>
+        Confused, on what type to chose for this field?
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html"
+        >
+          &nbsp; Refer to this
+        </a>
+      </pre>
       <Row type="flex" justify="center" align="middle">
         <Col span={8}>
           <pre>
