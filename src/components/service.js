@@ -10,9 +10,13 @@ const mapper = o => {
           o[k].constructor === Object &&
           k !== 'properties'
         ) {
+          const properties = mapper(o[k])
+
           o[k] = {
-            type: 'nested',
-            properties: mapper(o[k]),
+            type: 'object',
+          }
+          if (Object.keys(properties).length > 0) {
+            o[k].properties = properties
           }
         } else if (o[k].constructor === Array) {
           if (o[k].every(elem => elem.constructor === Object)) {
@@ -21,7 +25,13 @@ const mapper = o => {
               return acc
             }, {})
 
-            o[k] = { type: 'nested', properties: mapper(keys) }
+            const properties = mapper(keys)
+            o[k] = {
+              type: 'nested',
+            }
+            if (Object.keys(properties).length > 0) {
+              o[k].properties = properties
+            }
           } else {
             o[k] = { type: 'keyword' }
           }
