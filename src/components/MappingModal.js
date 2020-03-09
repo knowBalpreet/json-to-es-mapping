@@ -101,43 +101,40 @@ const options = {
   geo,
 }
 
-const MappingSelect = ({ type, changeType, mode, options, disabled }) => {
-  console.log('Mapping Select', { type, changeType, mode, options, disabled })
-  return (
-    <Select
-      style={{ width: '100%' }}
-      onChange={newType => changeType(newType)}
-      defaultValue={type}
-      mode={mode}
-    >
-      {Object.entries(options).map(([label, properties], index) => (
-        <OptGroup key={index} label={label}>
-          {Object.entries(properties).map(([label, property], index) =>
-            !property.children ? (
-              <Option
-                key={index}
-                value={label}
-                disabled={disabled.includes(label)}
-              >
-                {property.label}
-              </Option>
-            ) : (
-              Object.entries(property.children).map(([label, props], index) =>
-                Object.entries(props).map(([label3, option], index) => (
-                  <Option
-                    value={label}
-                    disabled={disabled.includes(label)}
-                    key={index}
-                  >{`${property.label} - ${props.label}`}</Option>
-                ))
-              )
+const MappingSelect = ({ type, changeType, mode, options, disabled }) => (
+  <Select
+    style={{ width: '100%' }}
+    onChange={newType => changeType(newType)}
+    defaultValue={type}
+    mode={mode}
+  >
+    {Object.entries(options).map(([label, properties], index) => (
+      <OptGroup key={index} label={label}>
+        {Object.entries(properties).map(([label, property], index) =>
+          !property.children ? (
+            <Option
+              key={index}
+              value={label}
+              disabled={disabled.includes(label)}
+            >
+              {property.label}
+            </Option>
+          ) : (
+            Object.entries(property.children).map(([label, props], index) =>
+              Object.entries(props).map(([label3, option], index) => (
+                <Option
+                  value={label}
+                  disabled={disabled.includes(label)}
+                  key={index}
+                >{`${property.label} - ${props.label}`}</Option>
+              ))
             )
-          )}
-        </OptGroup>
-      ))}
-    </Select>
-  )
-}
+          )
+        )}
+      </OptGroup>
+    ))}
+  </Select>
+)
 
 const MappingModal = ({ editData, setEditData, mappedData, setMappedData }) => {
   const [type, setType] = useState(editData.value)
@@ -145,11 +142,6 @@ const MappingModal = ({ editData, setEditData, mappedData, setMappedData }) => {
   const [multiFields, changeMultiFields] = useState(['keyword'])
 
   useEffect(() => {
-    console.log(
-      'editData',
-      editData,
-      get(mappedData, editData.namespace.join('.'))
-    )
     if (editData.namespace.includes('fields')) {
       const index = editData.namespace.findIndex(field => field === 'fields')
       editData.namespace = editData.namespace.slice(0, index)
@@ -187,25 +179,17 @@ const MappingModal = ({ editData, setEditData, mappedData, setMappedData }) => {
         fields: { ...nodes },
       }
     }
-    console.log('nodes', nodes, multiFields)
-    console.log(
-      'editData final',
-      `${editData.namespace.join('.')}${!isSearchable && `.${editData.name}`} `
-    )
-
     const _mappedData = set(
       mappedData,
       `${editData.namespace.join('.')}`,
       field
     )
-    console.log('_mappedData', _mappedData, field)
     setMappedData({ ..._mappedData })
 
     setEditData({})
   }
 
   const { value } = editData
-  console.log('editDAta', editData)
   const path = editData.namespace
     .filter(elem => elem !== 'properties')
     .join('.')

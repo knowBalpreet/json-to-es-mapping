@@ -15,6 +15,7 @@ module.exports = {
       },
     },
     `gatsby-transformer-sharp`,
+    'gatsby-plugin-pnpm',
     `gatsby-plugin-sharp`,
     `gatsby-plugin-antd`,
     {

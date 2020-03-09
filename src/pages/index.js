@@ -40,15 +40,12 @@ const IndexPage = () => {
   const submitJson = () => {
     try {
       const _data = JSON.parse(data.trim())
-      console.log('_data', _data)
       setData({ ..._data })
       submit(true)
     } catch (e) {
       message.error('Invalid JSON. Please check')
-      console.log('Invalid JSON. Please check', data, e, typeof data)
     }
   }
-  console.log('data', data, isSubmitted)
   return (
     <Layout>
       <SEO title="JSON to ES mapping transformer" />
@@ -72,7 +69,7 @@ const IndexPage = () => {
       {isSubmitted && (
         <Row>
           <Col span={11}>
-            <Tabs defaultActiveKey="1" onChange={e => console.log(e)}>
+            <Tabs defaultActiveKey="1">
               <TabPane tab="Data" key="1">
                 <pre>
                   <code>{JSON.stringify(data, null, 2)}</code>
@@ -81,7 +78,7 @@ const IndexPage = () => {
             </Tabs>
           </Col>
           <Col span={11} offset={2}>
-            <Tabs defaultActiveKey="0" onChange={e => console.log(e)}>
+            <Tabs defaultActiveKey="0">
               <TabPane tab="Mapping" key="0">
                 <Mapping data={data} />
               </TabPane>

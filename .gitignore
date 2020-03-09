@@ -70,3 +70,4 @@ yarn-error.log
 yarn.lock
 package-lock.json
 LICENSE
+pnpm-lock.yaml
