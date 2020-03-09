@@ -56,4 +56,16 @@ const mapper = o => {
   return o
 }
 
-export { mapper }
+const addObjectType = o => {
+  if (o.constructor === Object) {
+    Object.keys(o).forEach(k => {
+      if (o[k].properties) {
+        if (!o[k].type) o[k].type = 'object'
+        o[k].properties = addObjectType(o[k].properties)
+      }
+    })
+  }
+  return o
+}
+
+export { mapper, addObjectType }

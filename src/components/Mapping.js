@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Button } from 'antd'
+import { Button, Tooltip } from 'antd'
 import MappingModal from './MappingModal'
-import { mapper } from './service'
+
+const ButtonGroup = Button.Group
 
 class Mapping extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class Mapping extends Component {
 
     this.state = {
       ReactJson: null,
-      mappedData: { ...this.props.data },
+      mappedData: {},
       editData: {},
     }
   }
@@ -21,34 +22,62 @@ class Mapping extends Component {
         this.setState({ ReactJson: module })
       })
       .catch(error => console.error(error))
+    const { data } = this.props
 
-    const output = mapper(this.props.data)
-    this.setState({ mappedData: output })
+    this.setState({ mappedData: data })
+  }
+
+  setMappedData = mappedData => {
+    this.setState({ mappedData })
+    this.props.setData(mappedData)
   }
 
   render() {
     const { ReactJson, mappedData, editData } = this.state
+    const { undo, redo, canUndo, canRedo } = this.props
     return (
       <div>
-        {/* <pre>
-        <code>{JSON.stringify(mappedData, null, 2)}</code>
-      </pre> */}
-        <Button
-          onClick={() => {
-            const container = document.createElement('textarea')
-            const val = { properties: mappedData }
+        <ButtonGroup>
+          <Tooltip title="Copy mapping">
+            <Button
+              size="large"
+              onClick={() => {
+                const container = document.createElement('textarea')
+                const val = { properties: mappedData }
 
-            container.innerHTML =
-              typeof val === 'string' ? val : JSON.stringify(val, null, '  ')
+                container.innerHTML =
+                  typeof val === 'string'
+                    ? val
+                    : JSON.stringify(val, null, '  ')
 
-            document.body.appendChild(container)
-            container.select()
-            document.execCommand('copy')
-            document.body.removeChild(container)
-          }}
-        >
-          Copy Mapping
-        </Button>
+                document.body.appendChild(container)
+                container.select()
+                document.execCommand('copy')
+                document.body.removeChild(container)
+              }}
+              type="primary"
+              icon="copy"
+            />
+          </Tooltip>
+          <Tooltip title="Undo">
+            <Button
+              size="large"
+              disabled={!canUndo}
+              onClick={undo}
+              type="primary"
+              icon="undo"
+            />
+          </Tooltip>
+          <Tooltip title="Rndo">
+            <Button
+              size="large"
+              disabled={!canRedo}
+              onClick={redo}
+              type="primary"
+              icon="redo"
+            />
+          </Tooltip>
+        </ButtonGroup>
         <pre style={{ padding: 5 }}>
           Click on type value to edit mapping <br />
         </pre>
@@ -57,7 +86,7 @@ class Mapping extends Component {
             editData={editData}
             setEditData={editData => this.setState({ editData })}
             mappedData={mappedData}
-            setMappedData={mappedData => this.setState({ mappedData })}
+            setMappedData={this.setMappedData}
           />
         )}
         {Boolean(ReactJson) && (
