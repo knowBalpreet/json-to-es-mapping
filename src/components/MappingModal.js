@@ -95,10 +95,18 @@ const geo = {
     label: 'Geo Shape',
   },
 }
+
+const special = {
+  flattened: {
+    label: 'Flattened',
+  },
+}
+
 const options = {
   core,
   complex,
   geo,
+  special,
 }
 
 const MappingSelect = ({ type, changeType, mode, options, disabled }) => (

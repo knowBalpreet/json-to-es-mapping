@@ -9,31 +9,6 @@ import Mapping from '../components/Mapping'
 const { TabPane } = Tabs
 const { TextArea } = Input
 
-const sampleData = {
-  users: [
-    {
-      name: 'Balpreet Singh',
-      email: 'knowbalpreet@gmail.com',
-      createdOn: '',
-      modifiedOn: '',
-      permissions: {},
-      customAttributes: {
-        fonts: [1, 2, 3],
-        templates: [1, 2, 3],
-        audios: [1, 2, 3],
-      },
-    },
-  ],
-  permissions: {},
-  profiles: [],
-  createdOn: '',
-  customAttributes: {
-    fonts: [1, 2, 3],
-    templates: [1, 2, 3],
-    audios: [1, 2, 3],
-  },
-}
-
 const IndexPage = () => {
   const [data, setData] = useState({})
   const [isSubmitted, submit] = useState(false)
